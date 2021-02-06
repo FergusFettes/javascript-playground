@@ -20,13 +20,6 @@ loadManager = new THREE.LoadingManager();
 loader = new THREE.TextureLoader(loadManager);
 loader.crossOrigin = '';
 
-// const imageDict = {
-//   "https://storage.googleapis.com/schau-wien-images/media/sope2.jpg": "https://experiments.schau-wien.at/sophie/",
-//   "https://storage.googleapis.com/schau-wien-images/media/kiki1.jpg": "https://experiments.schau-wien.at/kiki/",
-//   "https://storage.googleapis.com/schau-wien-images/media/sopherfugs.jpg": "https://experiments.schau-wien.at/fergus/",
-//   "https://storage.googleapis.com/schau-wien-images/media/reeks2.jpg": "https://experiments.schau-wien.at/enrique/",
-// }
-
 const imageDict = {
   "https://storage.googleapis.com/schau-wien-images/media/sope2.jpg": "sophie",
   "https://storage.googleapis.com/schau-wien-images/media/kiki1.jpg": "kiki",
