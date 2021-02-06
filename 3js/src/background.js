@@ -1,6 +1,5 @@
 import * as THREE from "three";
 // import {GUI} from 'src/third_party/dat-gui.js';
-import { CSS3DRenderer } from 'src/third_party/CSS3DRenderer.js';
 import { OrbitControls } from 'src/js/OrbitControls.js';
 import { MinMaxGUIHelper } from "src/classes.js";
 
@@ -16,17 +15,14 @@ function makeBackground() {
   renderer = new THREE.WebGLRenderer({canvas, alpha: true});
   // renderer.physicallyCorrectLights = true;
 
-  container = document.getElementById( 'container' );
-
-  cssRenderer = new CSS3DRenderer();
-  cssRenderer.setSize( window.innerWidth, window.innerHeight );
-  container.appendChild( cssRenderer.domElement );
 
   mainCamera = makeCamera(80);
   mainCamera.position.set(0, 0, 150).multiplyScalar(5);
   mainCamera.lookAt(0, 0, 0);
   mainCamera.layers.enable(0);
   mainCamera.layers.enable(1);
+  mainCamera.layers.enable(2);
+  mainCamera.layers.enable(5);
   cameras = new WeakMap();
   cameras.set(mainCamera, 'main camera')
 
@@ -34,14 +30,8 @@ function makeBackground() {
   // control.target.set(0, 0, 0);
   // control.update();
 
-  // renderer.setClearColor(0xAAAAAA);
-  // renderer.shadowMap.enabled = true;
-
   scene = new THREE.Scene();
-  // scene.background = new THREE.Color(0xCCCCCC);
 
-  // put the camera on a pole (parent it to an object)
-  // so we can spin the pole to move the camera around the scene
   cameraPole = new THREE.Object3D();
   scene.add(cameraPole);
   cameraPole.add(mainCamera);
@@ -54,31 +44,9 @@ function makeBackground() {
 
 }
 
-// function updateCamera() {
-//   camera.updateProjectionMatrix();
-// }
-
 function makeCamera(fov = 40) {
   const aspect = window.innerWidth / window.innerHeight;  // the canvas default
   const zNear = 0.1;
   const zFar = 3000;
   return new THREE.PerspectiveCamera(fov, aspect, zNear, zFar);
-}
-
-function makeCameraControls(fov = 40, domElement = canvas) {
-  let camera = makeCamera(fov);
-  let control = new OrbitControls( camera, domElement );
-  control.rotateSpeed = 4;
-  // Block iframe events when dragging camera
-  var blocker = document.getElementById( 'blocker' );
-  blocker.style.display = 'none';
-
-  control.addEventListener( 'start', function () {
-    blocker.style.display = '';
-  } );
-  control.addEventListener( 'end', function () {
-    blocker.style.display = 'none';
-  } );
-
-  return {'camera': camera, 'control': control};
 }
