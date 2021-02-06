@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { OrbitControls } from 'src/js/OrbitControls.js';
 import { MinMaxGUIHelper } from "src/classes.js";
 
-export { canvas, container, renderer, cssRenderer, mainCamera, cameras, cameraPole, scene, gui, makeCamera, makeCameraControls };
+export { canvas, container, renderer, cssRenderer, mainCamera, cameras, cameraPole, scene, gui, makeCamera };
 let canvas, container, renderer, cssRenderer, mainCamera, cameras, cameraPole, scene, gui;
 
 // gui = new GUI();

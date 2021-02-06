@@ -4,6 +4,7 @@ import { PickHelper } from "src/classes.js";
 
 export {
   render,
+  resizeRendererToDisplaySize,
 };
 
 const infoElem = document.querySelector('#info');
