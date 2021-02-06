@@ -4,7 +4,7 @@ import { CSS3DRenderer } from 'src/third_party/CSS3DRenderer.js';
 import { OrbitControls } from 'src/js/OrbitControls.js';
 import { MinMaxGUIHelper } from "src/classes.js";
 
-export { canvas, container, renderer, cssRenderer, mainCamera, cameras, cameraPole, scene, gui, makeCamera };
+export { canvas, container, renderer, cssRenderer, mainCamera, cameras, cameraPole, scene, gui, makeCamera, makeCameraControls };
 let canvas, container, renderer, cssRenderer, mainCamera, cameras, cameraPole, scene, gui;
 
 // gui = new GUI();
@@ -65,20 +65,20 @@ function makeCamera(fov = 40) {
   return new THREE.PerspectiveCamera(fov, aspect, zNear, zFar);
 }
 
-// function makeCameraControls(fov = 40, domElement = canvas) {
-//   let camera = makeCamera(fov);
-//   let control = new OrbitControls( camera, domElement );
-//   control.rotateSpeed = 4;
-//   // Block iframe events when dragging camera
-//   var blocker = document.getElementById( 'blocker' );
-//   blocker.style.display = 'none';
+function makeCameraControls(fov = 40, domElement = canvas) {
+  let camera = makeCamera(fov);
+  let control = new OrbitControls( camera, domElement );
+  control.rotateSpeed = 4;
+  // Block iframe events when dragging camera
+  var blocker = document.getElementById( 'blocker' );
+  blocker.style.display = 'none';
 
-//   control.addEventListener( 'start', function () {
-//     blocker.style.display = '';
-//   } );
-//   control.addEventListener( 'end', function () {
-//     blocker.style.display = 'none';
-//   } );
+  control.addEventListener( 'start', function () {
+    blocker.style.display = '';
+  } );
+  control.addEventListener( 'end', function () {
+    blocker.style.display = 'none';
+  } );
 
-//   return {'camera': camera, 'control': control};
-// }
+  return {'camera': camera, 'control': control};
+}
