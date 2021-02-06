@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { DegRadHelper, ColorGUIHelper } from "src/classes.js";
-import { canvas, renderer, camera, scene, gui } from "src/background.js";
+import { canvas, renderer, mainCamera, scene, gui } from "src/background.js";
 
 export { makeLights };
 

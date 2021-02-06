@@ -79,6 +79,7 @@ class DegRadHelper {
 class PickHelper {
   constructor(index = 0) {
     this.raycaster = new THREE.Raycaster();
+    this.raycaster.layers.enable(0)
     this.pickedObject = null;
     this.pickedObjectSavedColor = 0;
     this.index = index
