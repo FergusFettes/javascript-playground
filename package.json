@@ -1,26 +1,26 @@
 {
-  "name": "docker-web-server",
-  "version": "1.0.0",
-  "description": "",
+  "name": "javascript_playground_ffettes",
+  "version": "0.1.0",
+  "description": "This is where I do javascript experiments.",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fergusfettes/docker-web-server.git"
+    "url": "git+https://github.com/fergusfettes/javascript-playground.git"
   },
   "dependencies": {
-    "three": "^0.116.0",
-    "src": "file:./3js/src/"
+    "src": "file:./3js/src/",
+    "three": "^0.116.1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/fergusfettes/docker-web-server/issues"
+    "url": "https://github.com/fergusfettes/javascript-playground/issues"
   },
-  "homepage": "https://github.com/fergusfettes/docker-web-server#readme",
+  "homepage": "https://github.com/fergusfettes/javascript-playground#readme",
   "devDependencies": {
     "cssnano": "^4.1.10"
   }

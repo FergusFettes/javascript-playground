@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from './../node_modules/three/build/three.js';
 import { createYouCube } from 'src/youcube.js'
 import { controls, cssRenderer, scene, makeCameraControls } from "src/background.js";
 import { render, renderObjects } from "src/render.js";
