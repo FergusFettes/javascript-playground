@@ -1,8 +1,16 @@
 import * as THREE from "three";
 import * as rnd from "src/render.js";
 import * as mat from "src/material.js";
+import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
 import { canvas, renderer, mainCamera, scene } from "src/background.js";
+import { makeLights } from "src/lights.js";
 
+let lights = ['ambient'];
+
+document.body.appendChild( VRButton.createButton( renderer ) );
+renderer.xr.enabled = true;
+
+makeLights(lights);
 init();
 function init() {
 

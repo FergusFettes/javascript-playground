@@ -17,7 +17,7 @@ function makeBackground() {
 
 
   mainCamera = makeCamera(80);
-  mainCamera.position.set(0, 0, 150).multiplyScalar(5);
+  mainCamera.position.set(0, 0, 150).multiplyScalar(1);
   mainCamera.lookAt(0, 0, 0);
   mainCamera.layers.enable(0);
   mainCamera.layers.enable(1);
