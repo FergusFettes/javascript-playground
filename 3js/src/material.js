@@ -1,9 +1,13 @@
 import * as THREE from "three";
-export { createMaterial, loader, loadManager, materials, imageMap };
+export { createMaterial, createRandomColorMaterial, loader, loadManager, materials, imageMap };
 
 let imageMap, materials, loadManager, loader;
 
 function createMaterial() {
+  return createRandomColorMaterial()
+}
+
+function createRandomColorMaterial() {
   const material = new THREE.MeshPhongMaterial({
     side: THREE.DoubleSide,
   });
