@@ -1,9 +1,13 @@
 import * as THREE from "three";
-export { createMaterial, loader, loadManager, materials, imageMap };
+export { createMaterial, createRanomdColorMaterial, loader, loadManager, materials, imageMap };
 
 let imageMap, materials, loadManager, loader;
 
 function createMaterial() {
+  return createRanomdColorMaterial()
+}
+
+function createRanomdColorMaterial() {
   const material = new THREE.MeshPhongMaterial({
     side: THREE.DoubleSide,
   });
