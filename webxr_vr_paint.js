@@ -133,24 +133,50 @@ function init() {
   controller2.userData.painter = painter2;
   scene.add( controller2 );
 
-  const geometry = new THREE.CylinderGeometry( 0.01, 0.02, 0.08, 5 );
-  geometry.rotateX( - Math.PI / 2 );
-  const material = new THREE.MeshStandardMaterial( { flatShading: true } );
-  const mesh = new THREE.Mesh( geometry, material );
+  {
+    const geometry = new THREE.CylinderGeometry( 0.01, 0.02, 0.08, 5 );
+    geometry.rotateX( - Math.PI / 2 );
+    // const material = new THREE.MeshStandardMaterial( { flatShading: true } );
+    const material = createRandomColorMaterial();
+    const mesh = new THREE.Mesh( geometry, material );
 
-  const pivot = new THREE.Mesh( new THREE.IcosahedronGeometry( 0.01, 3 ) );
-  pivot.name = 'pivot';
-  pivot.position.z = - 0.05;
-  mesh.add( pivot );
+    const pivot = new THREE.Mesh( new THREE.IcosahedronGeometry( 0.01, 3 ) );
+    pivot.name = 'pivot';
+    pivot.position.z = - 0.05;
+    mesh.add( pivot );
 
-  controller1.add( mesh.clone() );
-  controller2.add( mesh.clone() );
+    controller1.add( mesh.clone() );
+    controller1.userData.painter.color = material.color
+  }
+
+  {
+    const geometry = new THREE.CylinderGeometry( 0.01, 0.02, 0.08, 5 );
+    geometry.rotateX( - Math.PI / 2 );
+    // const material = new THREE.MeshStandardMaterial( { flatShading: true } );
+    const material = createRandomColorMaterial();
+    const mesh = new THREE.Mesh( geometry, material );
+
+    const pivot = new THREE.Mesh( new THREE.IcosahedronGeometry( 0.01, 3 ) );
+    pivot.name = 'pivot';
+    pivot.position.z = - 0.05;
+    mesh.add( pivot );
+
+    controller2.add( mesh.clone() );
+    controller2.userData.painter.color = material.color
+  }
 
   for (let i = 0; i < 16; ++i) {
     const material = createRandomColorMaterial();
     const cube = randomCubeOn(material, BOX_SEPARATION, BOX_SIZE)
     cube.layers.set(0)
     controller1.add(cube);
+  }
+
+  for (let i = 0; i < 16; ++i) {
+    const material = createRandomColorMaterial();
+    const cube = randomCubeOn(material, BOX_SEPARATION, BOX_SIZE)
+    cube.layers.set(1)
+    controller2.add(cube);
   }
 
   //
