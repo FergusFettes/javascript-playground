@@ -31,6 +31,8 @@ function init() {
   scene.background = new THREE.Color( 0x222222 );
 
   camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.01, 50 );
+  camera.layers.enable(0);
+  camera.layers.enable(1);
   camera.position.set( 0, 1.6, 3 );
 
   controls = new OrbitControls( camera, container );
@@ -147,6 +149,7 @@ function init() {
   for (let i = 0; i < 16; ++i) {
     const material = createRandomColorMaterial();
     const cube = randomCubeOn(material, BOX_SEPARATION, BOX_SIZE)
+    cube.layers.set(0)
     controller1.add(cube);
   }
 
@@ -223,7 +226,6 @@ function ProcessGamepad(gamepad, hand, pose) {
   // }
 
   // boxTable[hand].update_state(gamepad);
-  console.log(hand)
   update_state(gamepad)
 
   // // Update the pose of the boxes to sync with the controller.
@@ -234,14 +236,34 @@ function ProcessGamepad(gamepad, hand, pose) {
 };
 
 function update_state (gamepad) {
+  let buttonFuncs = {
+    // 0: selectFunc,
+    // 1: squeezeFunc,
+    // 2: unknownFunc,
+    // 3: joystickFunc,
+    4: buttonAFunc,
+    5: buttonBFunc,
+  }
   for (let i = 0; i < gamepad.buttons.length; ++i) {
     if (gamepad.buttons[i].pressed){
-      console.log('button pressed: ' + i + ', value: ' + gamepad.buttons[i].value + ', touched: ' + gamepad.buttons[i].touched)
+      if (buttonFuncs[i]){
+        buttonFuncs[i]
+      } else {
+        console.log('No function defined for button ' + i + '!')
+      }
     }
   }
-  for (let i = 0, j = 0; i < gamepad.axes.length; i+=2, ++j) {
-    console.log(gamepad.axes[i], i + 1 < gamepad.axes.length ? gamepad.axes[i + 1] : 0);
-  }
+  // for (let i = 0, j = 0; i < gamepad.axes.length; i+=2, ++j) {
+  //   console.log(gamepad.axes[i], i + 1 < gamepad.axes.length ? gamepad.axes[i + 1] : 0);
+  // }
+}
+
+function buttonAFunc() {
+  camera.layers.toggle(0)
+}
+
+function buttonBFunc() {
+  camera.layers.toggle(1)
 }
 
 function update_state_old(gamepad) {
