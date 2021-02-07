@@ -31,8 +31,6 @@ function init() {
   scene.background = new THREE.Color( 0x222222 );
 
   camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.01, 50 );
-  camera.layers.enable(0);
-  camera.layers.enable(1);
   camera.position.set( 0, 1.6, 3 );
 
   controls = new OrbitControls( camera, container );
@@ -168,14 +166,12 @@ function init() {
   for (let i = 0; i < 16; ++i) {
     const material = createRandomColorMaterial();
     const cube = randomCubeOn(material, BOX_SEPARATION, BOX_SIZE)
-    cube.layers.set(0)
     controller1.add(cube);
   }
 
   for (let i = 0; i < 16; ++i) {
     const material = createRandomColorMaterial();
     const cube = randomCubeOn(material, BOX_SEPARATION, BOX_SIZE)
-    cube.layers.set(1)
     controller2.add(cube);
   }
 
@@ -213,7 +209,7 @@ function handleController( controller ) {
 
   if ( userData.isSelecting === true ) {
 
-    painter.lineTo( cursor );
+    painter.lineTo( cursor, painter.color );
     painter.update();
 
   } else {

@@ -14,15 +14,12 @@ import {
 } from "three";
 
 function TubePainter() {
-
 	const BUFFER_SIZE = 1000000 * 3;
 
 	let positions = new BufferAttribute( new Float32Array( BUFFER_SIZE ), 3 );
 	positions.usage = DynamicDrawUsage;
-
 	let normals = new BufferAttribute( new Float32Array( BUFFER_SIZE ), 3 );
 	normals.usage = DynamicDrawUsage;
-
 	let colors = new BufferAttribute( new Float32Array( BUFFER_SIZE ), 3 );
 	colors.usage = DynamicDrawUsage;
 
@@ -42,7 +39,6 @@ function TubePainter() {
 	//
 
 	function getPoints( size ) {
-
 		let PI2 = Math.PI * 2;
 
 		let sides = 10;
@@ -50,14 +46,10 @@ function TubePainter() {
 		let radius = 0.01 * size;
 
 		for ( let i = 0; i < sides; i ++ ) {
-
 			let angle = ( i / sides ) * PI2;
 			array.push( new Vector3( Math.sin( angle ) * radius, Math.cos( angle ) * radius, 0 ) );
-
 		}
-
 		return array;
-
 	}
 
 	//
@@ -70,8 +62,7 @@ function TubePainter() {
 	let color = new Color( 0xffffff );
 	let size = 1;
 
-	function stroke( position1, position2, matrix1, matrix2 ) {
-
+	function stroke( position1, position2, matrix1, matrix2, color ) {
 		if ( position1.distanceToSquared( position2 ) === 0 ) return;
 
 		let count = geometry.drawRange.count;
@@ -128,7 +119,6 @@ function TubePainter() {
 		}
 
 		geometry.drawRange.count = count;
-
 	}
 
 	//
@@ -142,39 +132,31 @@ function TubePainter() {
 	let matrix2 = new Matrix4();
 
 	function moveTo( position ) {
-
 		point1.copy( position );
 		matrix1.lookAt( point2, point1, up );
 
 		point2.copy( position );
 		matrix2.copy( matrix1 );
-
 	}
 
-	function lineTo( position ) {
-
+	function lineTo( position, color ) {
 		point1.copy( position );
 		matrix1.lookAt( point2, point1, up );
 
-		stroke( point1, point2, matrix1, matrix2 );
+		stroke( point1, point2, matrix1, matrix2, color );
 
 		point2.copy( point1 );
 		matrix2.copy( matrix1 );
-
 	}
 
 	function setSize( value ) {
-
 		size = value;
-
 	}
 
 	//
 
 	let count = 0;
-
 	function update() {
-
 		let start = count;
 		let end = geometry.drawRange.count;
 
@@ -193,7 +175,6 @@ function TubePainter() {
 		colors.needsUpdate = true;
 
 		count = geometry.drawRange.count;
-
 	}
 
 	return {
