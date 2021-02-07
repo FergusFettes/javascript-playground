@@ -1,8 +1,16 @@
 import * as THREE from "three";
 import * as rnd from "src/render.js";
 import * as mat from "src/material.js";
-import { canvas, renderer, camera, scene } from "src/background.js";
+import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
+import { canvas, renderer, mainCamera, scene } from "src/background.js";
+import { makeLights } from "src/lights.js";
 
+let lights = ['ambient'];
+
+document.body.appendChild( VRButton.createButton( renderer ) );
+renderer.xr.enabled = true;
+
+makeLights(lights);
 init();
 function init() {
 
@@ -132,8 +140,8 @@ function init() {
 
     if (rnd.resizeRendererToDisplaySize(renderer)) {
       const canvas = renderer.domElement;
-      camera.aspect = canvas.clientWidth / canvas.clientHeight;
-      camera.updateProjectionMatrix();
+      mainCamera.aspect = canvas.clientWidth / canvas.clientHeight;
+      mainCamera.updateProjectionMatrix();
     }
 
     objects.forEach((obj, ndx) => {
@@ -157,7 +165,7 @@ function init() {
       obj.rotation.y = rot;
     });
 
-    renderer.render(scene, camera);
+    renderer.render(scene, mainCamera);
     requestAnimationFrame(render);
   }
 
