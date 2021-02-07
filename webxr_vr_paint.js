@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'src/js/OrbitControls.js';
 import { TubePainter } from 'src/js/TubePainter.js';
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
+import { materials, loadManager, imageMap, createMaterial } from "src/material.js";
 
 let camera, scene, session, renderer;
 let controller1, controller2;
@@ -129,13 +130,6 @@ function init() {
   controller2.userData.painter = painter2;
   scene.add( controller2 );
 
-  //if (infoElemBottom) {
-  //  controller2.addEventListener( event, {
-  //    infoElemBottom.textContent = event;
-  //  });
-  //}
-  ////
-
   const geometry = new THREE.CylinderGeometry( 0.01, 0.02, 0.08, 5 );
   geometry.rotateX( - Math.PI / 2 );
   const material = new THREE.MeshStandardMaterial( { flatShading: true } );
@@ -218,7 +212,7 @@ function render() {
 function ProcessGamepad(gamepad, hand, pose) {
   // if (!(hand in boxTable)) {
   //   boxTable[hand] = new GamepadBoxSet(gamepad.buttons.length, gamepad.axes.length);
-  //   scene.addNode(boxTable[hand]);
+  //   scene.add(boxTable[hand]);
   // }
 
   // boxTable[hand].update_state(gamepad);
@@ -227,7 +221,7 @@ function ProcessGamepad(gamepad, hand, pose) {
 
   // // Update the pose of the boxes to sync with the controller.
   // if (pose) {
-  //   boxTable[hand].matrix = pose.transform.matrix;
+  //   boxTable[hand].position = pose.transform.matrix;
   // }
 
 };
@@ -243,22 +237,22 @@ function update_state (gamepad) {
   }
 }
 
-// update_state(gamepad) {
-//   // The boxes associated with any given button will turn green if
-//   // touched and red if pressed. The box height will also scale based
-//   // on the button's value to make it appear like a button being pushed.
-//   for (let i = 0; i < gamepad.buttons.length; ++i) {
-//     this.buttonBoxes[i].pressed = gamepad.buttons[i].pressed;
-//     this.buttonBoxes[i].value = gamepad.buttons[i].value;
-//     this.buttonBoxes[i].touched = gamepad.buttons[i].touched;
-//   }
+update_state_old(gamepad) {
+  // The boxes associated with any given button will turn green if
+  // touched and red if pressed. The box height will also scale based
+  // on the button's value to make it appear like a button being pushed.
+  for (let i = 0; i < gamepad.buttons.length; ++i) {
+    this.buttonBoxes[i].pressed = gamepad.buttons[i].pressed;
+    this.buttonBoxes[i].value = gamepad.buttons[i].value;
+    this.buttonBoxes[i].touched = gamepad.buttons[i].touched;
+  }
 
-//   // Axes are assumed to come in X/Y pairs and will wiggle the
-//   // associated boxes around when moved.
-//   for (let i = 0, j = 0; i < gamepad.axes.length; i+=2, ++j) {
-//     this.axesBoxes[j].move(gamepad.axes[i], i + 1 < gamepad.axes.length ? gamepad.axes[i + 1] : 0);
-//   }
-// }
+  // Axes are assumed to come in X/Y pairs and will wiggle the
+  // associated boxes around when moved.
+  for (let i = 0, j = 0; i < gamepad.axes.length; i+=2, ++j) {
+    this.axesBoxes[j].move(gamepad.axes[i], i + 1 < gamepad.axes.length ? gamepad.axes[i + 1] : 0);
+  }
+}
 
 class GamepadBoxSet extends Node {
   constructor(buttonCount, axesCount) {
@@ -290,17 +284,11 @@ class GamepadBox extends Node {
     super();
 
     this.position = position;
-    let boxBuilder = new BoxBuilder();
-    boxBuilder.pushCube([0, 0, 0], BOX_SIZE);
-    let boxPrimitive = boxBuilder.finishPrimitive(renderer);
-    let boxMaterial = new PbrMaterial();
-    boxMaterial.baseColorFactor.value = [0.1, 0.1, 0.1, 1]; // grey
-    this.renderPrimitive = renderer.createRenderPrimitive(boxPrimitive, boxMaterial);
 
-    this.addRenderPrimitive(this.renderPrimitive);
-
-    mat4.identity(this.matrix);
-    mat4.translate(this.matrix, this.matrix, this.position);
+    // create cubes
+    const geometry = new THREE.BoxBufferGeometry(BOX_SIZE, BOX_SIZE, BOX_SIZE);
+    const material = createMaterial();
+    const cube = new THREE.Mesh(geometry, material);
 
     this._value = 0.0;
     this._pressed = false;
