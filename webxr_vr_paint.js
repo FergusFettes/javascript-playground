@@ -108,8 +108,8 @@ function init() {
     this.userData.isSqueezing = false;
   }
 
-  controllers['left'] = renderer.xr.getController( 0 );
-  controllers['right'] = renderer.xr.getController( 1 );
+  controllers['left'] = renderer.xr.getController( 1 );
+  controllers['right'] = renderer.xr.getController( 0 );
 
   for ( var key in controllers ) {
     controllers[key].addEventListener( 'selectstart', onSelectStart );
@@ -236,24 +236,16 @@ function update_state (gamepad, hand) {
 
 function buttonAFunc(hand) {
   const material = createRandomColorMaterial()
-  if ( hand in controllers ) {
-    controllers[hand].userData.painter.color = material.color
-    controllers[hand].children[0].material.color = material.color
-  } else {
-    console.log('Couldnt find hand ' + hand)
-  }
+  controllers[hand].userData.painter.color = material.color
+  controllers[hand].children[0].material.color = material.color
 }
 
 function buttonBFunc(hand) {
   const material = createRandomColorMaterial()
-  if ( hand in controllers ) {
-    controllers[hand].userData.painter.color = material.color
-    controllers[hand].children.forEach(function (item, index) {
-      item.material.color = material.color
-    })
-  } else {
-    console.log('Couldnt find hand ' + hand)
-  }
+  controllers[hand].userData.painter.color = material.color
+  controllers[hand].children.forEach(function (item, index) {
+    item.material.color = material.color
+  })
 }
 
 function joystickFunc() {
