@@ -2,7 +2,8 @@ import * as THREE from 'three';
 import { OrbitControls } from 'src/js/OrbitControls.js';
 import { TubePainter } from 'src/js/TubePainter.js';
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
-import { materials, loadManager, imageMap, createMaterial } from "src/material.js";
+import { createRanomdColorMaterial } from "src/material.js";
+import { randomCubeOn } from "src/functions.js";
 
 let camera, scene, session, renderer;
 let controller1, controller2;
@@ -13,9 +14,9 @@ const infoElemBottom = document.querySelector('#info-bottom');
 let controls;
 let boxTable = {};
 
-const BOX_SIZE = 0.03;
+const BOX_SIZE = 0.02;
 const BOX_MOTION_RANGE = 0.010;
-const BOX_SEPARATION = 0.04;
+const BOX_SEPARATION = 0.08;
 const BOX_SET_HEIGHT = 0.03;
 const BOX_SET_DEPTH = -0.06;
 
@@ -143,6 +144,12 @@ function init() {
   controller1.add( mesh.clone() );
   controller2.add( mesh.clone() );
 
+  for (let i = 0; i < 16; ++i) {
+    const material = createRanomdColorMaterial();
+    const cube = randomCubeOn(material, BOX_SEPARATION, BOX_SIZE)
+    controller1.add(cube);
+  }
+
   //
 
   window.addEventListener( 'resize', onWindowResize );
@@ -237,7 +244,7 @@ function update_state (gamepad) {
   }
 }
 
-update_state_old(gamepad) {
+function update_state_old(gamepad) {
   // The boxes associated with any given button will turn green if
   // touched and red if pressed. The box height will also scale based
   // on the button's value to make it appear like a button being pushed.
