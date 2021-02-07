@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'src/js/OrbitControls.js';
 import { TubePainter } from 'src/js/TubePainter.js';
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
-import { createRanomdColorMaterial } from "src/material.js";
+import { createRandomColorMaterial } from "src/material.js";
 import { randomCubeOn } from "src/functions.js";
 
 let camera, scene, session, renderer;
@@ -145,7 +145,7 @@ function init() {
   controller2.add( mesh.clone() );
 
   for (let i = 0; i < 16; ++i) {
-    const material = createRanomdColorMaterial();
+    const material = createRandomColorMaterial();
     const cube = randomCubeOn(material, BOX_SEPARATION, BOX_SIZE)
     controller1.add(cube);
   }
