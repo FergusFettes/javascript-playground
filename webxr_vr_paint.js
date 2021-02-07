@@ -200,9 +200,11 @@ function animate() {
 function render() {
   session = renderer.xr.getSession();
 
-  for (let source of session.inputSources) {
-    if (source.gamepad) {
-      ProcessGamepad(source.gamepad, source.handedness);
+  if (session) {
+    for (let source of session.inputSources) {
+      if (source.gamepad) {
+        ProcessGamepad(source.gamepad, source.handedness);
+      }
     }
   }
 
