@@ -4,6 +4,10 @@ import { TubePainter } from 'src/js/TubePainter.js';
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
 import { createRandomColorMaterial } from "src/material.js";
 import { randomCubeOn } from "src/functions.js";
+import { ColorGUIHelper } from "src/classes.js";
+import { GUI } from 'src/third_party/dat-gui.js';
+
+let gui = new GUI();
 
 let camera, scene, session, renderer;
 let controller1, controller2;
@@ -146,7 +150,9 @@ function init() {
     mesh.add( pivot );
 
     controller1.add( mesh.clone() );
+    controller1.add(gui)
     controller1.userData.painter.color = material.color
+    gui.addColor(new ColorGUIHelper(controller1.userData.painter, 'color'), 'value').name('left-color');
   }
 
   {
@@ -163,6 +169,7 @@ function init() {
 
     controller2.add( mesh.clone() );
     controller2.userData.painter.color = material.color
+    gui.addColor(new ColorGUIHelper(controller1.userData.painter, 'color'), 'value').name('right-color');
   }
 
   for (let i = 0; i < 16; ++i) {
@@ -200,7 +207,6 @@ function handleController( controller ) {
   const pivot = controller.getObjectByName( 'pivot' );
 
   if ( userData.isSqueezing === true ) {
-
     const delta = ( controller.position.y - userData.positionAtSqueezeStart ) * 5;
     const scale = Math.max( 0.1, userData.scaleAtSqueezeStart + delta );
 
@@ -208,18 +214,13 @@ function handleController( controller ) {
     painter.setSize( scale );
 
   }
-
   cursor.setFromMatrixPosition( pivot.matrixWorld );
 
   if ( userData.isSelecting === true ) {
-
     painter.lineTo( cursor, painter.color );
     painter.update();
-
   } else {
-
     painter.moveTo( cursor );
-
   }
 }
 
@@ -294,10 +295,9 @@ function buttonBFunc() {
   controller2.userData.painter.color = material.color
 }
 
-// function joystickFunc() {
-//   camera.layers.toggle(0)
-//   camera.layers.toggle(1)
-// }
+function joystickFunc() {
+  GUI.toggleHidden()
+}
 
 function update_state_old(gamepad) {
   // The boxes associated with any given button will turn green if
