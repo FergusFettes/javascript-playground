@@ -1,0 +1,3 @@
+[submodule "paint-vr"]
+	path = paint-vr
+	url = git@github.com:fergusfettes/paint-vr

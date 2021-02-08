@@ -16,18 +16,24 @@ import {
 function TubePainter() {
 	const BUFFER_SIZE = 1000000 * 3;
 
-	let positions = new BufferAttribute( new Float32Array( BUFFER_SIZE ), 3 );
-	positions.usage = DynamicDrawUsage;
-	let normals = new BufferAttribute( new Float32Array( BUFFER_SIZE ), 3 );
-	normals.usage = DynamicDrawUsage;
-	let colors = new BufferAttribute( new Float32Array( BUFFER_SIZE ), 3 );
-	colors.usage = DynamicDrawUsage;
-
+	let positions, normals, colors;
 	let geometry = new BufferGeometry();
-	geometry.setAttribute( 'position', positions );
-	geometry.setAttribute( 'normal', normals );
-	geometry.setAttribute( 'color', colors );
-	geometry.drawRange.count = 0;
+
+  function resetBuffers() {
+    positions = new BufferAttribute( new Float32Array( BUFFER_SIZE ), 3 );
+    positions.usage = DynamicDrawUsage;
+    normals = new BufferAttribute( new Float32Array( BUFFER_SIZE ), 3 );
+    normals.usage = DynamicDrawUsage;
+    colors = new BufferAttribute( new Float32Array( BUFFER_SIZE ), 3 );
+    colors.usage = DynamicDrawUsage;
+
+    geometry.setAttribute( 'position', positions );
+    geometry.setAttribute( 'normal', normals );
+    geometry.setAttribute( 'color', colors );
+    geometry.drawRange.count = 0;
+  }
+
+  resetBuffers();
 
 	let material = new MeshStandardMaterial( {
 		vertexColors: true
@@ -182,7 +188,8 @@ function TubePainter() {
 		moveTo: moveTo,
 		lineTo: lineTo,
 		setSize: setSize,
-		update: update
+		update: update,
+    resetBuffers: resetBuffers
 	};
 
 }

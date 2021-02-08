@@ -248,6 +248,6 @@ function buttonBFunc(hand) {
   })
 }
 
-function joystickFunc() {
-  GUI.toggleHidden()
+function joystickFunc(hand) {
+  controllers[hand].userData.painter.resetBuffers()
 }
