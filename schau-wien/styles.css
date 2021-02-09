@@ -13,7 +13,7 @@ canvas {
   width: 100vw;
   height: 100vh;
   display: block;
-  background: url('https://storage.googleapis.com/schau-wien-images/media/schau.png') 0 0 / 100% auto;
+  background: url("https://storage.googleapis.com/schau-wien-images/media/schau.png") 0 0 / 100% auto;
   background-size: cover;
 }
 
@@ -78,7 +78,7 @@ canvas {
 }
 
 .home-icon {
-  background: url('https://blog.schau-wien.at/wp-content/uploads/2020/04/logo.jpg') 0 0 / 100% auto;
+  background: url("https://blog.schau-wien.at/wp-content/uploads/2020/04/logo.jpg") 0 0 / 100% auto;
   width: 100px;
   height: 100px;
   top: 1.5rem;
@@ -96,12 +96,12 @@ canvas {
   border-radius: 0px;
 }
 
-.home-icon:hover .tooltiptext{
+.home-icon:hover .tooltiptext {
   visibility: visible;
 }
 
 .other-icon {
-  background: url('https://blog.schau-wien.at/wp-content/uploads/2020/04/decasia2.jpg') 0 0 / 100% auto;
+  background: url("https://blog.schau-wien.at/wp-content/uploads/2020/04/decasia2.jpg") 0 0 / 100% auto;
   height: 100px;
   width: 100px;
   top: 1.5rem;
@@ -119,12 +119,12 @@ canvas {
   border-radius: 0px;
 }
 
-.other-icon:hover .tooltiptext{
+.other-icon:hover .tooltiptext {
   visibility: visible;
 }
 
 .third-icon {
-  background: url('https://blog.schau-wien.at/wp-content/uploads/2020/04/decasia1.jpg') 0 0 / 100% auto;
+  background: url("https://blog.schau-wien.at/wp-content/uploads/2020/04/decasia1.jpg") 0 0 / 100% auto;
   height: 100px;
   width: 100px;
   bottom: 1.5rem;
@@ -142,7 +142,7 @@ canvas {
   border-radius: 0px;
 }
 
-.third-icon:hover .tooltiptext{
+.third-icon:hover .tooltiptext {
   visibility: visible;
 }
 
@@ -152,4 +152,3 @@ canvas {
   overflow: hidden;
   display: block;
 }
-

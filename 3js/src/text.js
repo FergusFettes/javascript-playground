@@ -3,28 +3,28 @@ require("babel-core/register");
 require("babel-polyfill");
 
 function main() {
-  const canvas = document.querySelector('#d');
-  const renderer = new THREE.WebGLRenderer({canvas});
+  const canvas = document.querySelector("#d");
+  const renderer = new THREE.WebGLRenderer({ canvas });
 
   const fov = 40;
-  const aspect = 2;  // the canvas default
+  const aspect = 2; // the canvas default
   const near = 0.1;
   const far = 1000;
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
   camera.position.z = 40;
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xAAAAAA);
+  scene.background = new THREE.Color(0xaaaaaa);
 
   {
-    const color = 0xFFFFFF;
+    const color = 0xffffff;
     const intensity = 1;
     const light = new THREE.DirectionalLight(color, intensity);
     light.position.set(-1, 2, 4);
     scene.add(light);
   }
   {
-    const color = 0xFFFFFF;
+    const color = 0xffffff;
     const intensity = 1;
     const light = new THREE.DirectionalLight(color, intensity);
     light.position.set(1, -2, -4);
@@ -49,7 +49,7 @@ function main() {
 
     const hue = Math.random();
     const saturation = 1;
-    const luminance = .5;
+    const luminance = 0.5;
     material.color.setHSL(hue, saturation, luminance);
 
     return material;
@@ -70,19 +70,21 @@ function main() {
     }
 
     async function doit() {
-      const font = await loadFont('https://threejsfundamentals.org/threejs/resources/threejs/fonts/helvetiker_regular.typeface.json');
-      const geometry = new THREE.TextBufferGeometry('fergatron100000', {
+      const font = await loadFont(
+        "https://threejsfundamentals.org/threejs/resources/threejs/fonts/helvetiker_regular.typeface.json"
+      );
+      const geometry = new THREE.TextBufferGeometry("fergatron100000", {
         font: font,
         size: 3.0,
-        height: .2,
+        height: 0.2,
         curveSegments: 12,
         bevelEnabled: true,
         bevelThickness: 0.15,
-        bevelSize: .3,
+        bevelSize: 0.3,
         bevelSegments: 5,
       });
 
-      addSolidGeometry(-.5, 0, geometry);
+      addSolidGeometry(-0.5, 0, geometry);
 
       const mesh = new THREE.Mesh(geometry, createMaterial());
       geometry.computeBoundingBox();
@@ -91,7 +93,7 @@ function main() {
       const parent = new THREE.Object3D();
       parent.add(mesh);
 
-      addObject(.5, 0, parent);
+      addObject(0.5, 0, parent);
     }
     doit();
   }
@@ -117,7 +119,7 @@ function main() {
     }
 
     objects.forEach((obj, ndx) => {
-      const speed = .5 + ndx * .05;
+      const speed = 0.5 + ndx * 0.05;
       const rot = time * speed;
       obj.rotation.x = rot;
       obj.rotation.y = rot;

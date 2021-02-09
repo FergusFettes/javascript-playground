@@ -2,7 +2,6 @@ import * as THREE from "three";
 import { loader, canvas, renderer, camera, scene, makeCamera } from "src/background-tank.js";
 
 function main() {
-
   const carWidth = 4;
   const carHeight = 1;
   const carLength = 8;
@@ -12,8 +11,8 @@ function main() {
 
   const bodyGeometry = new THREE.BoxBufferGeometry(carWidth, carHeight, carLength);
   const bodyMaterial = new THREE.MeshPhongMaterial({
-    color: 0x6688AA,
-    map: loader.load('http://localhost/kiki1.jpg'),
+    color: 0x6688aa,
+    map: loader.load("http://localhost/kiki1.jpg"),
   });
   const bodyMesh = new THREE.Mesh(bodyGeometry, bodyMaterial);
   bodyMesh.position.y = 1.4;
@@ -28,29 +27,30 @@ function main() {
   bodyMesh.add(tankCamera);
 
   const wheelRadius = 1;
-  const wheelThickness = .5;
+  const wheelThickness = 0.5;
   const wheelSegments = 6;
   const wheelGeometry = new THREE.CylinderBufferGeometry(
-      wheelRadius,     // top radius
-      wheelRadius,     // bottom radius
-      wheelThickness,  // height of cylinder
-      wheelSegments);
+    wheelRadius, // top radius
+    wheelRadius, // bottom radius
+    wheelThickness, // height of cylinder
+    wheelSegments
+  );
   const wheelMaterial = new THREE.MeshPhongMaterial({
     color: 0x888888,
-    map: loader.load('http://localhost/reeks.jpg'),
+    map: loader.load("http://localhost/reeks.jpg"),
   });
   const wheelPositions = [
-    [-carWidth / 2 - wheelThickness / 2, -carHeight / 2,  carLength / 3],
-    [ carWidth / 2 + wheelThickness / 2, -carHeight / 2,  carLength / 3],
+    [-carWidth / 2 - wheelThickness / 2, -carHeight / 2, carLength / 3],
+    [carWidth / 2 + wheelThickness / 2, -carHeight / 2, carLength / 3],
     [-carWidth / 2 - wheelThickness / 2, -carHeight / 2, 0],
-    [ carWidth / 2 + wheelThickness / 2, -carHeight / 2, 0],
+    [carWidth / 2 + wheelThickness / 2, -carHeight / 2, 0],
     [-carWidth / 2 - wheelThickness / 2, -carHeight / 2, -carLength / 3],
-    [ carWidth / 2 + wheelThickness / 2, -carHeight / 2, -carLength / 3],
+    [carWidth / 2 + wheelThickness / 2, -carHeight / 2, -carLength / 3],
   ];
   const wheelMeshes = wheelPositions.map((position) => {
     const mesh = new THREE.Mesh(wheelGeometry, wheelMaterial);
     mesh.position.set(...position);
-    mesh.rotation.z = Math.PI * .5;
+    mesh.rotation.z = Math.PI * 0.5;
     mesh.castShadow = true;
     bodyMesh.add(mesh);
     return mesh;
@@ -62,38 +62,43 @@ function main() {
   const domePhiStart = 0;
   const domePhiEnd = Math.PI * 2;
   const domeThetaStart = 0;
-  const domeThetaEnd = Math.PI * .5;
+  const domeThetaEnd = Math.PI * 0.5;
   const domeGeometry = new THREE.SphereBufferGeometry(
-    domeRadius, domeWidthSubdivisions, domeHeightSubdivisions,
-    domePhiStart, domePhiEnd, domeThetaStart, domeThetaEnd);
+    domeRadius,
+    domeWidthSubdivisions,
+    domeHeightSubdivisions,
+    domePhiStart,
+    domePhiEnd,
+    domeThetaStart,
+    domeThetaEnd
+  );
   const domeMesh = new THREE.Mesh(domeGeometry, bodyMaterial);
   domeMesh.castShadow = true;
   bodyMesh.add(domeMesh);
-  domeMesh.position.y = .5;
+  domeMesh.position.y = 0.5;
 
-  const turretWidth = .1;
-  const turretHeight = .1;
-  const turretLength = carLength * .75 * .2;
-  const turretGeometry = new THREE.BoxBufferGeometry(
-      turretWidth, turretHeight, turretLength);
+  const turretWidth = 0.1;
+  const turretHeight = 0.1;
+  const turretLength = carLength * 0.75 * 0.2;
+  const turretGeometry = new THREE.BoxBufferGeometry(turretWidth, turretHeight, turretLength);
   const turretMesh = new THREE.Mesh(turretGeometry, bodyMaterial);
   const turretPivot = new THREE.Object3D();
   turretMesh.castShadow = true;
   turretPivot.scale.set(5, 5, 5);
-  turretPivot.position.y = .5;
-  turretMesh.position.z = turretLength * .5;
+  turretPivot.position.y = 0.5;
+  turretMesh.position.z = turretLength * 0.5;
   turretPivot.add(turretMesh);
   bodyMesh.add(turretPivot);
 
   const turretCamera = makeCamera();
-  turretCamera.position.y = .75 * .2;
+  turretCamera.position.y = 0.75 * 0.2;
   turretMesh.add(turretCamera);
 
   const targetGeometry = new THREE.BoxBufferGeometry(2, 2, 2);
   const targetMaterial = new THREE.MeshPhongMaterial({
-    color: 0x00FF00,
+    color: 0x00ff00,
     flatShading: true,
-    map: loader.load('http://localhost/sope.jpg'),
+    map: loader.load("http://localhost/sope.jpg"),
   });
   const targetMesh = new THREE.Mesh(targetGeometry, targetMaterial);
   const targetOrbit = new THREE.Object3D();
@@ -116,24 +121,24 @@ function main() {
   targetCameraPivot.add(targetCamera);
 
   // Create a sine-like wave
-  const curve = new THREE.SplineCurve( [
-    new THREE.Vector2( -10, 0 ),
-    new THREE.Vector2( -5, 5 ),
-    new THREE.Vector2( 0, 0 ),
-    new THREE.Vector2( 5, -5 ),
-    new THREE.Vector2( 10, 0 ),
-    new THREE.Vector2( 5, 10 ),
-    new THREE.Vector2( -5, 10 ),
-    new THREE.Vector2( -10, -10 ),
-    new THREE.Vector2( -15, -8 ),
-    new THREE.Vector2( -10, 0 ),
-  ] );
+  const curve = new THREE.SplineCurve([
+    new THREE.Vector2(-10, 0),
+    new THREE.Vector2(-5, 5),
+    new THREE.Vector2(0, 0),
+    new THREE.Vector2(5, -5),
+    new THREE.Vector2(10, 0),
+    new THREE.Vector2(5, 10),
+    new THREE.Vector2(-5, 10),
+    new THREE.Vector2(-10, -10),
+    new THREE.Vector2(-15, -8),
+    new THREE.Vector2(-10, 0),
+  ]);
 
-  const points = curve.getPoints( 50 );
-  const geometry = new THREE.BufferGeometry().setFromPoints( points );
-  const material = new THREE.LineBasicMaterial( { color : 0xff0000 } );
-  const splineObject = new THREE.Line( geometry, material );
-  splineObject.rotation.x = Math.PI * .5;
+  const points = curve.getPoints(50);
+  const geometry = new THREE.BufferGeometry().setFromPoints(points);
+  const material = new THREE.LineBasicMaterial({ color: 0xff0000 });
+  const splineObject = new THREE.Line(geometry, material);
+  splineObject.rotation.x = Math.PI * 0.5;
   splineObject.position.y = 0.05;
   scene.add(splineObject);
 
@@ -153,13 +158,13 @@ function main() {
   const tankTarget = new THREE.Vector2();
 
   const cameras = [
-    { cam: camera, desc: 'detached camera', },
-    { cam: turretCamera, desc: 'on turret looking at target', },
-    { cam: targetCamera, desc: 'near target looking at tank', },
-    { cam: tankCamera, desc: 'above back of tank', },
+    { cam: camera, desc: "detached camera" },
+    { cam: turretCamera, desc: "on turret looking at target" },
+    { cam: targetCamera, desc: "near target looking at tank" },
+    { cam: tankCamera, desc: "above back of tank" },
   ];
 
-  const infoElem = document.querySelector('#info');
+  const infoElem = document.querySelector("#info");
 
   function render(time) {
     time *= 0.001;
@@ -174,15 +179,15 @@ function main() {
     }
 
     // move target
-    targetOrbit.rotation.y = time * .027;
+    targetOrbit.rotation.y = time * 0.027;
     targetBob.position.y = Math.sin(time * 2) * 4;
     targetMesh.rotation.x = time * 3;
     targetMesh.rotation.y = time * 3;
-    targetMaterial.emissive.setHSL(time * 10 % 1, 1, .35);
-    targetMaterial.color.setHSL(time * 10 % 1, 1, .35);
+    targetMaterial.emissive.setHSL((time * 10) % 1, 1, 0.35);
+    targetMaterial.color.setHSL((time * 10) % 1, 1, 0.35);
 
     // move tank
-    const tankTime = time * .05;
+    const tankTime = time * 0.05;
     curve.getPointAt(tankTime % 1, tankPosition);
     curve.getPointAt((tankTime + 0.01) % 1, tankTarget);
     tank.position.set(tankPosition.x, 0, tankPosition.y);
@@ -203,7 +208,7 @@ function main() {
       obj.rotation.x = time * 3;
     });
 
-    const camera = cameras[time * .25 % cameras.length | 0];
+    const camera = cameras[(time * 0.25) % cameras.length | 0];
     infoElem.textContent = camera.desc;
 
     renderer.render(scene, camera.cam);

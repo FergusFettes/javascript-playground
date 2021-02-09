@@ -5,7 +5,7 @@ class AxisGridHelper {
   constructor(node, units = 10) {
     const axes = new THREE.AxesHelper();
     axes.material.depthTest = false;
-    axes.renderOrder = 2;  // after the grid
+    axes.renderOrder = 2; // after the grid
     node.add(axes);
 
     const grid = new THREE.GridHelper(units, units);
@@ -46,7 +46,7 @@ class MinMaxGUIHelper {
   }
   set max(v) {
     this.obj[this.maxProp] = v;
-    this.min = this.min;  // this will call the min setter
+    this.min = this.min; // this will call the min setter
   }
 }
 
@@ -79,10 +79,10 @@ class DegRadHelper {
 class PickHelper {
   constructor(index = 0) {
     this.raycaster = new THREE.Raycaster();
-    this.raycaster.layers.enable(0)
+    this.raycaster.layers.enable(0);
     this.pickedObject = null;
     this.pickedObjectSavedColor = 0;
-    this.index = index
+    this.index = index;
   }
   pick(normalizedPosition, scene, camera, time) {
     // restore the color if there is a picked object
@@ -101,7 +101,7 @@ class PickHelper {
       // save its color
       this.pickedObjectSavedColor = this.pickedObject.material.emissive.getHex();
       // set its emissive color to flashing red/yellow
-      this.pickedObject.material.emissive.setHex((time * 8) % 2 > 1 ? 0xFFFF00 : 0xFF0000);
+      this.pickedObject.material.emissive.setHex((time * 8) % 2 > 1 ? 0xffff00 : 0xff0000);
     }
   }
 }

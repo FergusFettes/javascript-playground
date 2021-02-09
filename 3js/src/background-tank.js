@@ -5,12 +5,11 @@ let canvas, renderer, camera, scene, loader;
 
 makeBackground();
 function makeBackground() {
-
   loader = new THREE.TextureLoader();
-  canvas = document.querySelector('#c');
-  renderer = new THREE.WebGLRenderer({canvas});
+  canvas = document.querySelector("#c");
+  renderer = new THREE.WebGLRenderer({ canvas });
 
-  renderer.setClearColor(0xAAAAAA);
+  renderer.setClearColor(0xaaaaaa);
   renderer.shadowMap.enabled = true;
 
   camera = makeCamera();
@@ -18,7 +17,7 @@ function makeBackground() {
   camera.lookAt(0, 0, 0);
 
   scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xCCCCCC);
+  scene.background = new THREE.Color(0xcccccc);
 
   {
     const light = new THREE.DirectionalLight(0xffffff, 1);
@@ -44,15 +43,15 @@ function makeBackground() {
   }
 
   const groundGeometry = new THREE.PlaneBufferGeometry(50, 50);
-  const groundMaterial = new THREE.MeshPhongMaterial({color: 0xCC8866});
+  const groundMaterial = new THREE.MeshPhongMaterial({ color: 0xcc8866 });
   const groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
-  groundMesh.rotation.x = Math.PI * -.5;
+  groundMesh.rotation.x = Math.PI * -0.5;
   groundMesh.receiveShadow = true;
   scene.add(groundMesh);
 }
 
 function makeCamera(fov = 40) {
-  const aspect = 2;  // the canvas default
+  const aspect = 2; // the canvas default
   const zNear = 0.1;
   const zFar = 1000;
   return new THREE.PerspectiveCamera(fov, aspect, zNear, zFar);

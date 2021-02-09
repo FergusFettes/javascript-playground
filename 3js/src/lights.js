@@ -4,11 +4,10 @@ import { canvas, renderer, mainCamera, scene, gui } from "src/background.js";
 
 export { makeLights };
 
-function makeLights (lights) {
-
-  if (lights.includes('ambient')) {
+function makeLights(lights) {
+  if (lights.includes("ambient")) {
     // Ambient
-    const color = 0xFFFFFF;
+    const color = 0xffffff;
     const intensity = 1;
     const light = new THREE.AmbientLight(color, intensity);
     light.layers.enable(1);
@@ -16,12 +15,11 @@ function makeLights (lights) {
 
     // gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('color');
     // gui.add(light, 'intensity', 0, 2, 0.01);
-
   }
 
-  if (lights.includes('directional')) {
+  if (lights.includes("directional")) {
     // Directional
-    const color = 0xFFFFFF;
+    const color = 0xffffff;
     const intensity = 1;
     const light = new THREE.DirectionalLight(color, intensity);
     light.position.set(10, 10, 0);
@@ -39,9 +37,9 @@ function makeLights (lights) {
     // makeXYZGUI(gui, light.target.position, 'target', updateLight);
   }
 
-  if (lights.includes('spotlight')) {
+  if (lights.includes("spotlight")) {
     // Spotlight
-    const color = 0xFFFFFF;
+    const color = 0xffffff;
     const intensity = 1;
     const light = new THREE.SpotLight(color, intensity);
     light.position.set(0, 10, 0);
@@ -64,9 +62,9 @@ function makeLights (lights) {
     // makeXYZGUI(gui, light.position, 'position', updateLight);
   }
 
-  if (lights.includes('skycolor')) {
-    const skyColor = 0xB1E1FF;  // light blue
-    const groundColor = 0xB97A20;  // brownish orange
+  if (lights.includes("skycolor")) {
+    const skyColor = 0xb1e1ff; // light blue
+    const groundColor = 0xb97a20; // brownish orange
     const intensity = 1;
     const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
     scene.add(light);
@@ -77,7 +75,6 @@ function makeLights (lights) {
     //
     // makeXYZGUI(gui, light.position, 'position', updateLight);
   }
-
 }
 
 function updateLight(light) {
@@ -87,8 +84,8 @@ function updateLight(light) {
 
 function makeXYZGUI(gui, vector3, name, onChangeFn) {
   const folder = gui.addFolder(name);
-  folder.add(vector3, 'x', -30, 30).onChange(onChangeFn);
-  folder.add(vector3, 'y', -30, 30).onChange(onChangeFn);
-  folder.add(vector3, 'z', -30, 30).onChange(onChangeFn);
+  folder.add(vector3, "x", -30, 30).onChange(onChangeFn);
+  folder.add(vector3, "y", -30, 30).onChange(onChangeFn);
+  folder.add(vector3, "z", -30, 30).onChange(onChangeFn);
   folder.open();
 }

@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import {GUI} from "js/third_party/dat-gui.js";
+import { GUI } from "js/third_party/dat-gui.js";
 import * as rnd from "src/render.js";
 import * as mat from "src/material.js";
 import * as hlp from "src/helpers.js";
@@ -7,7 +7,6 @@ import { canvas, renderer, camera, scene } from "src/background-tank.js";
 
 init();
 function init() {
-
   const gui = new GUI();
 
   const objects = [];
@@ -33,37 +32,36 @@ function init() {
   const radius = 1;
   const widthSegments = 6;
   const heightSegments = 6;
-  const sphereGeometry = new THREE.SphereBufferGeometry(
-      radius, widthSegments, heightSegments);
+  const sphereGeometry = new THREE.SphereBufferGeometry(radius, widthSegments, heightSegments);
 
-  const sunMaterial = new THREE.MeshPhongMaterial({emissive: 0xFFFF00});
+  const sunMaterial = new THREE.MeshPhongMaterial({ emissive: 0xffff00 });
   const sunMesh = new THREE.Mesh(sphereGeometry, sunMaterial);
-  sunMesh.scale.set(5, 5, 5);  // make the sun large
+  sunMesh.scale.set(5, 5, 5); // make the sun large
   solarSystem.add(sunMesh);
   slow_objects.push(sunMesh);
 
-  const earthMaterial = new THREE.MeshPhongMaterial({color: 0x2233FF, emissive: 0x112244});
+  const earthMaterial = new THREE.MeshPhongMaterial({ color: 0x2233ff, emissive: 0x112244 });
   const earthMesh = new THREE.Mesh(sphereGeometry, earthMaterial);
   earthMesh.position.x = 10;
   earthOrbit.add(earthMesh);
   slow_objects.push(earthMesh);
 
-  const moonMaterial = new THREE.MeshPhongMaterial({color: 0x888888, emissive: 0x222222});
+  const moonMaterial = new THREE.MeshPhongMaterial({ color: 0x888888, emissive: 0x222222 });
   const moonMesh = new THREE.Mesh(sphereGeometry, moonMaterial);
-  moonMesh.scale.set(.5, .5, .5);
+  moonMesh.scale.set(0.5, 0.5, 0.5);
   moonOrbit.add(moonMesh);
   slow_objects.push(moonMesh);
 
   function makeAxisGrid(node, label, units) {
     const helper = new hlp.AxisGridHelper(node, units);
-    gui.add(helper, 'visible').name(label);
+    gui.add(helper, "visible").name(label);
   }
 
-  makeAxisGrid(solarSystem, 'solarSystem', 25);
-  makeAxisGrid(sunMesh, 'sunMesh');
-  makeAxisGrid(earthOrbit, 'earthOrbit');
-  makeAxisGrid(earthMesh, 'earthMesh');
-  makeAxisGrid(moonMesh, 'moonMesh');
+  makeAxisGrid(solarSystem, "solarSystem", 25);
+  makeAxisGrid(sunMesh, "sunMesh");
+  makeAxisGrid(earthOrbit, "earthOrbit");
+  makeAxisGrid(earthMesh, "earthMesh");
+  makeAxisGrid(moonMesh, "moonMesh");
 
   function addSolidGeometry(x, y, geometry, collection) {
     const mesh = new THREE.Mesh(geometry, mat.createMaterial());
@@ -71,7 +69,7 @@ function init() {
   }
 
   function addLineGeometry(x, y, geometry, collection) {
-    const material = new THREE.LineBasicMaterial({color: 0x000000});
+    const material = new THREE.LineBasicMaterial({ color: 0x000000 });
     const mesh = new THREE.LineSegments(geometry, material);
     addObject(x, y, mesh, collection);
   }
@@ -84,23 +82,6 @@ function init() {
     collection.push(obj);
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   function render(time) {
     time *= 0.001;
 
@@ -111,21 +92,21 @@ function init() {
     }
 
     objects.forEach((obj, ndx) => {
-      const speed = .1 + ndx * .0005;
+      const speed = 0.1 + ndx * 0.0005;
       const rot = Math.random() * speed;
       obj.rotation.x = rot;
       obj.rotation.y = rot;
     });
 
     slow_objects.forEach((obj, ndx) => {
-      const speed = .1 + ndx * .1;
+      const speed = 0.1 + ndx * 0.1;
       const rot = time * speed;
       obj.rotation.x = rot;
       obj.rotation.y = rot;
     });
 
     points_collection.forEach((obj, ndx) => {
-      const speed = .1 + ndx * .01;
+      const speed = 0.1 + ndx * 0.01;
       const rot = time * speed;
       obj.rotation.x = rot;
       obj.rotation.y = rot;
@@ -137,4 +118,3 @@ function init() {
 
   requestAnimationFrame(render);
 }
-

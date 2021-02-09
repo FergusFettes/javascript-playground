@@ -3,16 +3,16 @@ import { canvas, scene, camera } from "src/background.js";
 import { PickHelper } from "src/classes.js";
 import { resizeRendererToDisplaySize } from "src/render.js";
 
-const pickPosition = {x: 0, y: 0};
+const pickPosition = { x: 0, y: 0 };
 const pickHelper = new PickHelper();
 const cubeMap = new WeakMap();
 
-const infoElem = document.querySelector('#info');
+const infoElem = document.querySelector("#info");
 
 init();
 function init() {
-  const renderer = new THREE.WebGLRenderer({canvas});
-  scene.background = new THREE.Color('white');
+  const renderer = new THREE.WebGLRenderer({ canvas });
+  scene.background = new THREE.Color("white");
 
   // put the camera on a pole (parent it to an object)
   // so we can spin the pole to move the camera around the scene
@@ -21,7 +21,7 @@ function init() {
   cameraPole.add(camera);
 
   {
-    const color = 0xFFFFFF;
+    const color = 0xffffff;
     const intensity = 1;
     const light = new THREE.DirectionalLight(color, intensity);
     light.position.set(-1, 2, 4);
@@ -50,7 +50,7 @@ function init() {
   clearPickPosition();
 
   function render(time) {
-    time *= 0.001;  // convert to seconds;
+    time *= 0.001; // convert to seconds;
 
     if (resizeRendererToDisplaySize(renderer)) {
       const canvas = renderer.domElement;
@@ -58,7 +58,7 @@ function init() {
       camera.updateProjectionMatrix();
     }
 
-    cameraPole.rotation.y = time * .1;
+    cameraPole.rotation.y = time * 0.1;
 
     pickHelper.pick(pickPosition, scene, camera, time);
     showLink();
@@ -69,30 +69,37 @@ function init() {
   }
   requestAnimationFrame(render);
 
-  window.addEventListener('mousemove', setPickPosition);
-  window.addEventListener('mouseout', clearPickPosition);
-  window.addEventListener('mouseleave', clearPickPosition);
-  window.addEventListener('mouseup', (event) => {
-    event.preventDefault();
-    goToLink();
-  }, {passive: false});
-  window.addEventListener('touchstart', (event) => {
-    // prevent the window from scrolling
-    event.preventDefault();
-    setPickPosition(event.touches[0]);
-  }, {passive: false});
-  window.addEventListener('touchmove', (event) => {
+  window.addEventListener("mousemove", setPickPosition);
+  window.addEventListener("mouseout", clearPickPosition);
+  window.addEventListener("mouseleave", clearPickPosition);
+  window.addEventListener(
+    "mouseup",
+    (event) => {
+      event.preventDefault();
+      goToLink();
+    },
+    { passive: false }
+  );
+  window.addEventListener(
+    "touchstart",
+    (event) => {
+      // prevent the window from scrolling
+      event.preventDefault();
+      setPickPosition(event.touches[0]);
+    },
+    { passive: false }
+  );
+  window.addEventListener("touchmove", (event) => {
     setPickPosition(event.touches[0]);
   });
-  window.addEventListener('touchend', clearPickPosition);
-
+  window.addEventListener("touchend", clearPickPosition);
 }
 
 function getCanvasRelativePosition(event) {
   const rect = canvas.getBoundingClientRect();
   return {
-    x: (event.clientX - rect.left) * canvas.width  / rect.width,
-    y: (event.clientY - rect.top ) * canvas.height / rect.height,
+    x: ((event.clientX - rect.left) * canvas.width) / rect.width,
+    y: ((event.clientY - rect.top) * canvas.height) / rect.height,
   };
 }
 
@@ -107,12 +114,12 @@ function rand(min, max) {
 function getPoint() {
   let d, x, y, z;
   do {
-      x = Math.random() * 2.0 - 1.0;
-      y = Math.random() * 2.0 - 1.0;
-      z = Math.random() * 2.0 - 1.0;
-      d = x*x + y*y + z*z;
-  } while(d > 1.0);
-  return {x: x, y: y, z: z};
+    x = Math.random() * 2.0 - 1.0;
+    y = Math.random() * 2.0 - 1.0;
+    z = Math.random() * 2.0 - 1.0;
+    d = x * x + y * y + z * z;
+  } while (d > 1.0);
+  return { x: x, y: y, z: z };
 }
 
 function randomColor() {
@@ -130,40 +137,40 @@ function clearPickPosition() {
 
 function setPickPosition(event) {
   const pos = getCanvasRelativePosition(event);
-  pickPosition.x = (pos.x / canvas.width ) *  2 - 1;
-  pickPosition.y = (pos.y / canvas.height) * -2 + 1;  // note we flip Y
+  pickPosition.x = (pos.x / canvas.width) * 2 - 1;
+  pickPosition.y = (pos.y / canvas.height) * -2 + 1; // note we flip Y
 }
 
 function mapCube(cube) {
-  const choice = Math.floor(Math.random() * 4)
-  switch(choice) {
+  const choice = Math.floor(Math.random() * 4);
+  switch (choice) {
     case 0:
-      cubeMap.set(cube, "https://experiments.schau-wien.at/test1/")
+      cubeMap.set(cube, "https://experiments.schau-wien.at/test1/");
       break;
     case 1:
-      cubeMap.set(cube, "https://experiments.schau-wien.at/test2/")
+      cubeMap.set(cube, "https://experiments.schau-wien.at/test2/");
       break;
     case 2:
-      cubeMap.set(cube, "https://experiments.schau-wien.at/test3/")
+      cubeMap.set(cube, "https://experiments.schau-wien.at/test3/");
       break;
     case 3:
-      cubeMap.set(cube, "https://experiments.schau-wien.at/test4/")
+      cubeMap.set(cube, "https://experiments.schau-wien.at/test4/");
       break;
   }
 }
 
 function showLink() {
   if (cubeMap.get(pickHelper.pickedObject)) {
-      infoElem.textContent = cubeMap.get(pickHelper.pickedObject);
+    infoElem.textContent = cubeMap.get(pickHelper.pickedObject);
   } else {
-      infoElem.textContent = ''
+    infoElem.textContent = "";
   }
 }
 
 function goToLink() {
   if (cubeMap.get(pickHelper.pickedObject)) {
-      const link = cubeMap.get(pickHelper.pickedObject);
-      window.open(link);
+    const link = cubeMap.get(pickHelper.pickedObject);
+    window.open(link);
   }
-  infoElem.textContent = ''
+  infoElem.textContent = "";
 }

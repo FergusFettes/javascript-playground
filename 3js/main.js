@@ -1,25 +1,24 @@
 import * as THREE from "three";
 import * as rnd from "src/render.js";
 import * as mat from "src/material.js";
-import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
+import { VRButton } from "three/examples/jsm/webxr/VRButton.js";
 import { canvas, renderer, mainCamera, scene } from "src/background.js";
 import { makeLights } from "src/lights.js";
 
-let lights = ['ambient'];
+let lights = ["ambient"];
 
-document.body.appendChild( VRButton.createButton( renderer ) );
+document.body.appendChild(VRButton.createButton(renderer));
 renderer.xr.enabled = true;
 
 makeLights(lights);
 init();
 function init() {
-
   const objects = [];
   const slow_objects = [];
   const points_collection = [];
   const spread = 15;
 
-  for (let i = 0; i < 2; i++){
+  for (let i = 0; i < 2; i++) {
     function klein(v, u, target) {
       u *= Math.PI;
       v *= 2 * Math.PI;
@@ -29,11 +28,11 @@ function init() {
       let z;
 
       if (u < Math.PI) {
-          x = 3 * Math.cos(u) * (1 + Math.sin(u)) + (2 * (1 - Math.cos(u) / 2)) * Math.cos(u) * Math.cos(v);
-          z = -8 * Math.sin(u) - 2 * (1 - Math.cos(u) / 2) * Math.sin(u) * Math.cos(v);
+        x = 3 * Math.cos(u) * (1 + Math.sin(u)) + 2 * (1 - Math.cos(u) / 2) * Math.cos(u) * Math.cos(v);
+        z = -8 * Math.sin(u) - 2 * (1 - Math.cos(u) / 2) * Math.sin(u) * Math.cos(v);
       } else {
-          x = 3 * Math.cos(u) * (1 + Math.sin(u)) + (2 * (1 - Math.cos(u) / 2)) * Math.cos(v + Math.PI);
-          z = -8 * Math.sin(u);
+        x = 3 * Math.cos(u) * (1 + Math.sin(u)) + 2 * (1 - Math.cos(u) / 2) * Math.cos(v + Math.PI);
+        z = -8 * Math.sin(u);
       }
 
       const y = -2 * (1 - Math.cos(u) / 2) * Math.sin(v);
@@ -43,22 +42,18 @@ function init() {
 
     const slices = 25;
     const stacks = 25;
-    addSolidGeometry((i * 6) - 3, 0, new THREE.ParametricBufferGeometry(klein, slices, stacks), slow_objects);
+    addSolidGeometry(i * 6 - 3, 0, new THREE.ParametricBufferGeometry(klein, slices, stacks), slow_objects);
   }
 
   for (let i = 0; i < 5; i++) {
     const width = 8;
     const height = 8;
     const depth = 8;
-    addSolidGeometry(
-      i - 2,
-      i - 2,
-      new THREE.BoxBufferGeometry(width, height, depth),
-      slow_objects);
+    addSolidGeometry(i - 2, i - 2, new THREE.BoxBufferGeometry(width, height, depth), slow_objects);
   }
 
   for (let i = 0; i < 100; i++) {
-    const radius = (Math.sin(i * Math.PI) * 3.5) + 1.75;
+    const radius = Math.sin(i * Math.PI) * 3.5 + 1.75;
     const tube = Math.random(1.5) * 2;
     const radialSegments = 8;
     const tubularSegments = 64;
@@ -66,21 +61,18 @@ function init() {
     const q = 3;
     addSolidGeometry(
       (i % 15) - 7,
-      (i / 5) - 10,
+      i / 5 - 10,
       new THREE.TorusKnotBufferGeometry(radius, tube, tubularSegments, radialSegments, p, q),
-      objects);
+      objects
+    );
   }
 
   for (let i = 0; i < 32; i++) {
     const radius = 15;
     const canvas = renderer.domElement;
-    const w = canvas.clientWidth - (canvas.clientWidth / 5) ;
+    const w = canvas.clientWidth - canvas.clientWidth / 5;
     const h = canvas.clientHeight;
-    addSolidGeometry(
-      (i / w) * 0.8,
-      (i / 3) - 2,
-      new THREE.IcosahedronBufferGeometry(radius),
-      slow_objects);
+    addSolidGeometry((i / w) * 0.8, i / 3 - 2, new THREE.IcosahedronBufferGeometry(radius), slow_objects);
   }
 
   for (var i = 0; i < 4; i++) {
@@ -89,8 +81,8 @@ function init() {
     const heightSegments = 8;
     const geometry = new THREE.SphereBufferGeometry(radius, widthSegments, heightSegments);
     const material = new THREE.PointsMaterial({
-        color: Math.random(),
-        size: 5,     // in world units
+      color: Math.random(),
+      size: 5, // in world units
     });
     const points = new THREE.Points(geometry, material);
     points.position.set(-1, -2, -4);
@@ -98,14 +90,13 @@ function init() {
     points_collection.push(points);
   }
 
-
   function addSolidGeometry(x, y, geometry, collection) {
     const mesh = new THREE.Mesh(geometry, mat.createMaterial());
     addObject(x, y, mesh, collection);
   }
 
   function addLineGeometry(x, y, geometry, collection) {
-    const material = new THREE.LineBasicMaterial({color: 0x000000});
+    const material = new THREE.LineBasicMaterial({ color: 0x000000 });
     const mesh = new THREE.LineSegments(geometry, material);
     addObject(x, y, mesh, collection);
   }
@@ -118,23 +109,6 @@ function init() {
     collection.push(obj);
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   function render(time) {
     time *= 0.001;
 
@@ -145,21 +119,21 @@ function init() {
     }
 
     objects.forEach((obj, ndx) => {
-      const speed = .1 + ndx * .0005;
+      const speed = 0.1 + ndx * 0.0005;
       const rot = Math.random() * speed;
       obj.rotation.x = rot;
       obj.rotation.y = rot;
     });
 
     slow_objects.forEach((obj, ndx) => {
-      const speed = .1 + ndx * .1;
+      const speed = 0.1 + ndx * 0.1;
       const rot = time * speed;
       obj.rotation.x = rot;
       obj.rotation.y = rot;
     });
 
     points_collection.forEach((obj, ndx) => {
-      const speed = .1 + ndx * .01;
+      const speed = 0.1 + ndx * 0.01;
       const rot = time * speed;
       obj.rotation.x = rot;
       obj.rotation.y = rot;
@@ -171,4 +145,3 @@ function init() {
 
   requestAnimationFrame(render);
 }
-

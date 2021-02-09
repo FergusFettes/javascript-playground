@@ -2,16 +2,15 @@ import * as THREE from "three";
 import { canvas, scene, camera } from "src/background.js";
 import { render, cubeMap, touchListeners, clearPickPosition } from "src/render.js";
 
-
 init();
 touchListeners();
 clearPickPosition();
 function init() {
-  const renderer = new THREE.WebGLRenderer({canvas});
-  scene.background = new THREE.Color('white');
+  const renderer = new THREE.WebGLRenderer({ canvas });
+  scene.background = new THREE.Color("white");
 
   {
-    const color = 0xFFFFFF;
+    const color = 0xffffff;
     const intensity = 1;
     const light = new THREE.DirectionalLight(color, intensity);
     light.position.set(-1, 2, 4);
@@ -40,7 +39,6 @@ function init() {
   requestAnimationFrame(render);
 }
 
-
 function rand(min, max) {
   if (max === undefined) {
     max = min;
@@ -52,12 +50,12 @@ function rand(min, max) {
 function getPoint() {
   let d, x, y, z;
   do {
-      x = Math.random() * 2.0 - 1.0;
-      y = Math.random() * 2.0 - 1.0;
-      z = Math.random() * 2.0 - 1.0;
-      d = x*x + y*y + z*z;
-  } while(d > 1.0);
-  return {x: x, y: y, z: z};
+    x = Math.random() * 2.0 - 1.0;
+    y = Math.random() * 2.0 - 1.0;
+    z = Math.random() * 2.0 - 1.0;
+    d = x * x + y * y + z * z;
+  } while (d > 1.0);
+  return { x: x, y: y, z: z };
 }
 
 function randomColor() {
@@ -65,19 +63,19 @@ function randomColor() {
 }
 
 function mapCube(cube) {
-  const choice = Math.floor(Math.random() * 4)
-  switch(choice) {
+  const choice = Math.floor(Math.random() * 4);
+  switch (choice) {
     case 0:
-      cubeMap.set(cube, "https://experiments.schau-wien.at/test1/")
+      cubeMap.set(cube, "https://experiments.schau-wien.at/test1/");
       break;
     case 1:
-      cubeMap.set(cube, "https://experiments.schau-wien.at/test2/")
+      cubeMap.set(cube, "https://experiments.schau-wien.at/test2/");
       break;
     case 2:
-      cubeMap.set(cube, "https://experiments.schau-wien.at/test3/")
+      cubeMap.set(cube, "https://experiments.schau-wien.at/test3/");
       break;
     case 3:
-      cubeMap.set(cube, "https://experiments.schau-wien.at/test4/")
+      cubeMap.set(cube, "https://experiments.schau-wien.at/test4/");
       break;
   }
 }
