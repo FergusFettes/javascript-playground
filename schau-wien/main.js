@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { createYouCube } from 'src/youcube.js';
 import { canvas, scene, mainCamera, makeCamera, cameras, controls } from "src/background.js";
 import { materials, loadManager, imageMap, createMaterial } from "src/material.js";
-import "src/lights.js";
+import 'src/lights.js';
 import { render } from "src/render.js";
 
 const loadingElem = document.querySelector('#loading');
