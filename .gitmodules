@@ -10,3 +10,12 @@
 [submodule "three.js"]
 	path = three.js
 	url = https://github.com/mrdoob/three.js
+[submodule "xterm.js"]
+	path = xterm.js
+	url = https://github.com/xtermjs/xterm.js
+[submodule "gotty"]
+	path = gotty
+	url = https://github.com/yudai/gotty
+[submodule "wetty"]
+	path = wetty
+	url = https://github.com/butlerx/wetty

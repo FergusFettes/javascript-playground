@@ -14,7 +14,8 @@
   "dependencies": {
     "src": "file:./3js/src/",
     "three": "^0.116.1",
-    "vim": "file:./vim.js/NV.js/"
+    "vim": "file:./vim.js/NV.js/",
+    "xterm": "^4.10.0"
   },
   "devDependencies": {
     "cssnano": "^4.1.10",
