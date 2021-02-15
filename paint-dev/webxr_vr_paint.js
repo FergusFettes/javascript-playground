@@ -6,6 +6,7 @@ import { createRandomColorMaterial } from "src/material.js";
 import { randomCubeOn } from "src/functions.js";
 import { ColorGUIHelper } from "src/classes.js";
 import { GUI } from "src/third_party/dat-gui.js";
+import { Terminal } from "xterm";
 
 const gui = new GUI();
 
@@ -27,6 +28,11 @@ function init() {
   const container = document.createElement("div");
   document.body.appendChild(container);
 
+  const terminal = document.createElement("terminal");
+  const term = new Terminal();
+  term.open(document.getElementById("terminal"));
+  term.write("Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ");
+
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0x222222);
   // scene.add(gui)
@@ -45,9 +51,25 @@ function init() {
     metalness: 0.0
   });
   const table = new THREE.Mesh(tableGeometry, tableMaterial);
-  table.position.y = 0.35;
+  table.position.y = -5;
   table.position.z = 0.85;
   scene.add(table);
+
+  const termTexture = new THREE.Texture(terminal);
+  // termTexture.needsUpdate = true;
+  termTexture.minFilter = THREE.LinearFilter;
+
+  const termAreaMat = new THREE.MeshBasicMaterial({ map: termTexture, side: THREE.DoubleSide });
+  // termAreaMat.transparent = true;
+
+  const terminalRepresentation = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(2, 2),
+    new THREE.MeshBasicMaterial(termAreaMat)
+  );
+  terminalRepresentation.position.y = -4;
+  terminalRepresentation.position.z = 0.9;
+  terminalRepresentation.castShadow = true;
+  scene.add(terminalRepresentation);
 
   const floorGometry = new THREE.PlaneGeometry(4, 4);
   const floorMaterial = new THREE.MeshStandardMaterial({
@@ -70,7 +92,6 @@ function init() {
 
   const painter1 = new TubePainter();
   scene.add(painter1.mesh);
-
   const painter2 = new TubePainter();
   scene.add(painter2.mesh);
 
