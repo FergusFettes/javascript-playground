@@ -15,6 +15,7 @@ let controller1, controller2;
 const controllers = { "left": controller1, "right": controller2 };
 
 const cursor = new THREE.Vector3();
+const term = new Terminal();
 
 let controls;
 
@@ -29,7 +30,6 @@ function init() {
   document.body.appendChild(container);
 
   const terminal = document.createElement("terminal");
-  const term = new Terminal();
   term.open(terminal);
   term.write("Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ");
 
@@ -206,6 +206,7 @@ function animate() {
 
 function render() {
   session = renderer.xr.getSession();
+  term.write("Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ");
 
   if (session) {
     for (const source of session.inputSources) {
