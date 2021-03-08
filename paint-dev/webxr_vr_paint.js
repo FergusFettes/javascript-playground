@@ -30,7 +30,7 @@ function init() {
 
   const terminal = document.createElement("terminal");
   const term = new Terminal();
-  term.open(document.getElementById("terminal"));
+  term.open(terminal);
   term.write("Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ");
 
   scene = new THREE.Scene();
@@ -38,7 +38,7 @@ function init() {
   // scene.add(gui)
 
   camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 50);
-  camera.position.set(0, 1.6, 3);
+  camera.position.set(0, 1.6, -5);
 
   controls = new OrbitControls(camera, container);
   controls.target.set(0, 1.6, 0);
@@ -51,23 +51,24 @@ function init() {
     metalness: 0.0
   });
   const table = new THREE.Mesh(tableGeometry, tableMaterial);
-  table.position.y = -5;
+  // This is z for some reason
+  table.position.y = 0.5;
   table.position.z = 0.85;
   scene.add(table);
 
-  const termTexture = new THREE.Texture(terminal);
-  // termTexture.needsUpdate = true;
+  const termTexture = new THREE.Texture(term);
+  termTexture.needsUpdate = true;
   termTexture.minFilter = THREE.LinearFilter;
 
   const termAreaMat = new THREE.MeshBasicMaterial({ map: termTexture, side: THREE.DoubleSide });
-  // termAreaMat.transparent = true;
+  termAreaMat.transparent = true;
 
   const terminalRepresentation = new THREE.Mesh(
     new THREE.PlaneBufferGeometry(2, 2),
     new THREE.MeshBasicMaterial(termAreaMat)
   );
-  terminalRepresentation.position.y = -4;
-  terminalRepresentation.position.z = 0.9;
+  terminalRepresentation.position.y = 1;
+  terminalRepresentation.position.z = 1.9;
   terminalRepresentation.castShadow = true;
   scene.add(terminalRepresentation);
 
