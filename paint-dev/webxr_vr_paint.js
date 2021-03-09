@@ -29,13 +29,28 @@ function init() {
   const container = document.createElement("div");
   document.body.appendChild(container);
 
+  const shellprompt = "$ ";
+  term.prompt = function() {
+    term.write("\r\n" + shellprompt);
+  };
+
   const terminal = document.createElement("terminal");
   term.open(terminal);
   term.write("Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ");
+  term.writeln("");
+  term.prompt();
+  term.setOption("cursorBlink", true);
+
+  term.onKey(ev => {
+    console.log(ev);
+    term.write(ev.key);
+    if (ev.key === "\r") {
+      term.prompt();
+    }
+  });
 
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0x222222);
-  // scene.add(gui)
 
   camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 50);
   camera.position.set(0, 1.6, -5);
