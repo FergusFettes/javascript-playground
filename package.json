@@ -12,8 +12,6 @@
     "url": "git+https://github.com/fergusfettes/javascript-playground.git"
   },
   "dependencies": {
-    "react": "16.0.0",
-    "react-dom": "16.0.0",
     "src": "file:./3js/src/",
     "three": "^0.116.1",
     "vim": "file:./vim.js/NV.js/",
