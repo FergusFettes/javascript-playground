@@ -1,7 +1,12 @@
+import * as THREE from "three";
 import { Terminal } from "xterm";
 
 const term = new Terminal();
-term.open(document.getElementById("terminal"));
+const terminal = document.createElement("terminal");
+term.open(terminal);
+
+const container = document.createElement("div");
+document.body.appendChild(container);
 
 const shellprompt = "$ ";
 term.prompt = function() {
@@ -20,3 +25,75 @@ term.onKey(ev => {
     term.prompt();
   }
 });
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x222222);
+
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 50);
+camera.position.set(0, 1.6, -5);
+
+{
+  const tableGeometry = new THREE.BoxGeometry(0.5, 0.8, 0.5);
+  const tableMaterial = new THREE.MeshStandardMaterial({
+    color: 0x444444,
+    roughness: 1.0,
+    metalness: 0.0
+  });
+  const table = new THREE.Mesh(tableGeometry, tableMaterial);
+  // This is z for some reason
+  table.position.y = 0.5;
+  table.position.z = 0.85;
+  scene.add(table);
+}
+
+{
+  const floorGometry = new THREE.PlaneGeometry(4, 4);
+  const floorMaterial = new THREE.MeshStandardMaterial({
+    color: 0x222222,
+    roughness: 1.0,
+    metalness: 0.0
+  });
+  const floor = new THREE.Mesh(floorGometry, floorMaterial);
+  floor.rotation.x = -Math.PI / 2;
+  scene.add(floor);
+
+  const grid = new THREE.GridHelper(10, 20, 0x111111, 0x111111);
+  scene.add(grid);
+}
+
+{
+  const termTexture = new THREE.Texture(term);
+  termTexture.needsUpdate = true;
+  termTexture.minFilter = THREE.LinearFilter;
+
+  const termAreaMat = new THREE.MeshBasicMaterial({ map: termTexture, side: THREE.DoubleSide });
+  termAreaMat.transparent = true;
+
+  const terminalRepresentation = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(2, 2),
+    new THREE.MeshBasicMaterial(termAreaMat)
+  );
+  terminalRepresentation.position.y = 1;
+  terminalRepresentation.position.z = 1.9;
+  terminalRepresentation.castShadow = true;
+  scene.add(terminalRepresentation);
+}
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(window.innerWidth, window.innerHeight);
+container.appendChild(renderer.domElement);
+
+{
+  scene.add(new THREE.HemisphereLight(0x888877, 0x777788));
+
+  const light = new THREE.DirectionalLight(0xffffff, 0.5);
+  light.position.set(0, 4, 0);
+  scene.add(light);
+}
+
+function render() {
+  renderer.render(scene, camera);
+}
+
+renderer.setAnimationLoop(render);
