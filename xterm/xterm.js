@@ -1,12 +1,13 @@
 import * as THREE from "three";
+import { OrbitControls } from "src/js/OrbitControls.js";
 import { Terminal } from "xterm";
+
+const container = document.createElement("div");
+document.body.appendChild(container);
 
 const term = new Terminal();
 const terminal = document.createElement("terminal");
 term.open(terminal);
-
-const container = document.createElement("div");
-document.body.appendChild(container);
 
 const shellprompt = "$ ";
 term.prompt = function() {
@@ -31,6 +32,10 @@ scene.background = new THREE.Color(0x222222);
 
 const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 50);
 camera.position.set(0, 1.6, -5);
+
+const controls = new OrbitControls(camera, container);
+controls.target.set(0, 1.6, 0);
+controls.update();
 
 {
   const tableGeometry = new THREE.BoxGeometry(0.5, 0.8, 0.5);
@@ -83,6 +88,8 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 container.appendChild(renderer.domElement);
+
+// document.body.appendChild(VRButton.createButton(renderer));
 
 {
   scene.add(new THREE.HemisphereLight(0x888877, 0x777788));

@@ -29,13 +29,14 @@ function init() {
   const container = document.createElement("div");
   document.body.appendChild(container);
 
+  const terminal = document.createElement("terminal");
+  term.open(terminal);
+
   const shellprompt = "$ ";
   term.prompt = function() {
     term.write("\r\n" + shellprompt);
   };
 
-  const terminal = document.createElement("terminal");
-  term.open(terminal);
   term.write("Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ");
   term.writeln("");
   term.prompt();
