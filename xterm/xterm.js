@@ -67,6 +67,22 @@ controls.update();
 }
 
 {
+  // const terminalTexture = new THREE.Texture(terminal);
+  // terminalTexture.needsUpdate = true;
+  // terminalTexture.minFilter = THREE.LinearFilter;
+
+  // const terminalAreaMat = new THREE.MeshBasicMaterial({ map: terminalTexture, side: THREE.DoubleSide });
+  // terminalAreaMat.transparent = true;
+
+  // const terminalRepresentation = new THREE.Mesh(
+  //   new THREE.PlaneBufferGeometry(2, 2),
+  //   new THREE.MeshBasicMaterial(terminalAreaMat)
+  // );
+  // terminalRepresentation.position.y = 1;
+  // terminalRepresentation.position.z = 1.9;
+  // terminalRepresentation.castShadow = true;
+  // scene.add(terminalRepresentation);
+
   const termTexture = new THREE.Texture(term);
   termTexture.needsUpdate = true;
   termTexture.minFilter = THREE.LinearFilter;
@@ -74,14 +90,14 @@ controls.update();
   const termAreaMat = new THREE.MeshBasicMaterial({ map: termTexture, side: THREE.DoubleSide });
   termAreaMat.transparent = true;
 
-  const terminalRepresentation = new THREE.Mesh(
+  const termRepresentation = new THREE.Mesh(
     new THREE.PlaneBufferGeometry(2, 2),
     new THREE.MeshBasicMaterial(termAreaMat)
   );
-  terminalRepresentation.position.y = 1;
-  terminalRepresentation.position.z = 1.9;
-  terminalRepresentation.castShadow = true;
-  scene.add(terminalRepresentation);
+  termRepresentation.position.y = 1;
+  termRepresentation.position.z = 1.9;
+  termRepresentation.castShadow = true;
+  scene.add(termRepresentation);
 }
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
